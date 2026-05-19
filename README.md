@@ -1,4 +1,3 @@
-# web-applications
 # Web Applications & Spring Boot Projects
 
 Repository dedicated to my studies and projects using Java and Spring Boot.
