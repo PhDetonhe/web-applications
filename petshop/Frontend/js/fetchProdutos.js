@@ -3,6 +3,10 @@ const categoriaId = params.get("categoria");
 const produtosContainer = document.getElementById("sectionsprodutos");
 window.petshopProducts = window.petshopProducts || {};
 
+function imagemProduto(produto) {
+    return PetImages.productImageSrc(produto.imagem);
+}
+
 function renderProdutos(produtos) {
     if (!produtosContainer) return;
 
@@ -20,8 +24,8 @@ function renderProdutos(produtos) {
         produtosContainer.innerHTML += `
             <div class="bg-white p-4 rounded-xl border border-border flex flex-col justify-between shadow-sm hover:scale-[1.03] hover:shadow-xl transition">
                 <a href="Infoprodutos.html?id=${produto.id_produto}" class="block">
-                    <div class="flex justify-center bg-cream rounded-lg">
-                        <img src="${produto.imagem || "https://via.placeholder.com/150"}" alt="${produto.nome}" class="h-32 object-contain p-3">
+                    <div class="flex items-center justify-center bg-cream rounded-lg aspect-square overflow-hidden">
+                        <img src="${imagemProduto(produto)}" alt="${produto.nome}" class="w-full h-full object-contain p-4">
                     </div>
                     <h2 class="text-sm text-charcoal mt-3 font-semibold">${produto.nome}</h2>
                     <p class="text-muted text-xs mt-2 line-clamp-2">${produto.descricao || "Sem descricao"}</p>
@@ -78,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const preco_desconto = parseFloat(document.getElementById("produtoPrecoDesconto").value);
         const qtd_estoque = parseInt(document.getElementById("produtoEstoque").value);
         const idCategoria = document.getElementById("produtoCategoria").value;
+        const imagemArquivo = document.getElementById("produtoImagem")?.files?.[0];
         const erro = document.getElementById("produtoErro");
         const resultado = document.getElementById("produtoResultado");
 
@@ -94,16 +99,17 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const produto = {
-            nome,
-            descricao,
-            preco,
-            preco_desconto,
-            qtd_estoque: Number.isNaN(qtd_estoque) ? 0 : qtd_estoque,
-            imagem: ""
-        };
-
         try {
+            const imagem = await PetImages.readImageFileAsDataUrl(imagemArquivo);
+            const produto = {
+                nome,
+                descricao,
+                preco,
+                preco_desconto,
+                qtd_estoque: Number.isNaN(qtd_estoque) ? 0 : qtd_estoque,
+                imagem
+            };
+
             const response = await fetch(`http://localhost:8080/produtos/${idCategoria}`, {
                 method: "POST",
                 headers: {

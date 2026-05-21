@@ -44,7 +44,7 @@ public class UsuarioService {
         usuario = repository.save(usuario);
 
         String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRole().name());
-        return new AuthResponse(token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
+        return new AuthResponse(usuario.getId_usuario(), token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
     }
 
     // ==================== CADASTRO ADMIN (apenas ADMIN pode chamar) ====================
@@ -63,7 +63,7 @@ public class UsuarioService {
         usuario = repository.save(usuario);
 
         String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRole().name());
-        return new AuthResponse(token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
+        return new AuthResponse(usuario.getId_usuario(), token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
     }
 
     // ==================== LOGIN ====================
@@ -76,7 +76,7 @@ public class UsuarioService {
         }
 
         String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRole().name());
-        return new AuthResponse(token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
+        return new AuthResponse(usuario.getId_usuario(), token, usuario.getNome(), usuario.getEmail(), usuario.getRole().name());
     }
 
     // ==================== LISTAR TODOS (ADMIN) ====================

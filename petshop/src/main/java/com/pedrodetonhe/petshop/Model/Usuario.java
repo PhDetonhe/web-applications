@@ -1,5 +1,6 @@
 package com.pedrodetonhe.petshop.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
