@@ -12,4 +12,3 @@ Current projects include:
 
 Most projects were developed for learning purposes and backend practice with Spring Boot, while the petshop system is being developed as a complete web application.
 
-🚧 Some projects are still in progress.
